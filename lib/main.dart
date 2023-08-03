@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   runApp(
@@ -9,7 +10,7 @@ void main() {
           title: Text('Dice'),
           backgroundColor: Colors.red,
         ),
-        body: DicePage(),
+        body: Dicepage(),
       ),
     ),
   );
@@ -17,25 +18,48 @@ void main() {
 
 
 
-class DicePage extends StatelessWidget {
+
+
+class Dicepage extends StatefulWidget {
+  @override
+  State<Dicepage> createState() => _DicepageState();
+}
+
+class _DicepageState extends State<Dicepage> {
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 3;
+
+  void changeDiceFace(){
+    setState(() {
+      leftDiceNumber = Random().nextInt(6)+1;
+      rightDiceNumber = Random().nextInt(6)+1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Row(
         children: <Widget>[
           Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Image.asset('images/dice1.png'),
-              ),
+            child: TextButton(onPressed: () {
+              setState(() {
+                changeDiceFace();
+              });
+            },
+                child: Image.asset('images/dice$leftDiceNumber.png')),
           ),
-          Expanded(child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Image.asset('images/dice1.png'),
-          ),
+          Expanded(child: TextButton(onPressed: () {
+            setState(() {
+              changeDiceFace();
+            });
+          },
+              child: Image.asset('images/dice$rightDiceNumber.png')),
           ),
         ],
       ),
     );
   }
-}
+  }
+
+
